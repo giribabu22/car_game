@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
 
 void main() {
   runApp(const MyApp());
@@ -59,6 +60,12 @@ class _MyHomePageState extends State<MyHomePage> {
   // double _controller = 10.0;
   double carPosition = 0.0;
   double carUPdown = 10.0;
+  bool run_ = false;
+  double count = 0;
+  double range_ = 0;
+  Timer? _timer;
+  String name ='';
+
   void _moveCar(double newPosition) {
     setState(() {
       if (carPosition < 100 &&
@@ -81,6 +88,31 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+void _carRunning(bool v) {
+  setState(() {
+    if (!run_) {
+      run_ = v;
+      _timer = Timer.periodic(Duration(microseconds: 1), (timer) {
+        setState(() {
+          if(range_ == 0){
+            range_ = 1;
+          }
+          count -= range_ * 1;
+          print('$range_ range');
+          if (count < -1010){
+            count -= -1010;
+            range_ += 1;
+          }
+        });
+      });
+    } else if (_timer != null) {
+      _timer!.cancel();
+      run_ = false;
+      range_ = 0;
+    }
+  });
+}
+
   // double _animation = 20.0;
   @override
   Widget build(BuildContext context) {
@@ -89,37 +121,37 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-  Container(
-    width: 300,
-    height: MediaQuery.of(context).size.height,
-    decoration: BoxDecoration(
-      color: Colors.black,
-    ),
-    child: Stack(
-      children: <Widget>[
-        for (var i = 0; i <= 1100; i += 100)
-          Positioned(
-            bottom: i.toDouble(),
-            left: 145,
-            child: Container(
-              width: 3.0,
-              height: 25,
-              color: Colors.white,
-            ),
-          ),
-        Positioned(
-          bottom: carUPdown,
-          left: carPosition,
-          child: Image.asset(
-            '../car.png',
-            width: 310,
-            height: 600,
-          ),
-        ),
-      ],
-    ),
-  ),
-],
+              Container(
+                width: 300,
+                height: MediaQuery.of(context).size.height,
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                ),
+                child: Stack(
+                  children: <Widget>[
+                    for (var i = 0; i <= 3111; i += 100)
+                      Positioned(
+                        bottom: i.toDouble() + count,
+                        left: 145,
+                        child: Container(
+                          width: 3.0,
+                          height: 25,
+                          color: Colors.white,
+                        ),
+                      ),
+                    Positioned(
+                      bottom: carUPdown,
+                      left: carPosition,
+                      child: Image.asset(
+                        '../img/car.png',
+                        width: 310,
+                        height: 600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
         //  backgroundColor: Colors.grey,
@@ -128,7 +160,7 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Positioned(
               left: 80,
-              bottom: 100,
+              bottom: 100 ,
               child: FloatingActionButton(
                 onPressed: () => _moveCar(carPosition - 10),
                 tooltip: 'Move Left',
@@ -145,7 +177,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             Positioned(
-              left: 125,
+              left: 130,
               bottom: 50,
               child: FloatingActionButton(
                 onPressed: () => _moveUpDown(carUPdown - 10),
@@ -154,7 +186,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             Positioned(
-              left: 125,
+              left: 130,
               bottom: 150,
               child: FloatingActionButton(
                 onPressed: () => _moveUpDown(carUPdown + 10),
@@ -162,6 +194,54 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: const Icon(Icons.arrow_upward),
               ),
             ),
+            
+            Positioned(
+              left: 825,
+              bottom: 150,
+              child: Container(
+                height: 60, // Set the height
+                width: 60, // Set the width
+                child: FloatingActionButton(
+                  onPressed: () => _carRunning(true),
+                  child: Text(
+                    run_ ? 'Stop' : 'Start',
+                    style: TextStyle(
+                      color: Colors.pinkAccent,
+                    ),
+                  ),
+                )
+              ),
+            ),
+
+            // Positioned(
+            //   left: 625,
+            //   bottom: 400,
+            //   child: Container(
+            //     height: 60, // Set the height
+            //     width: 200, // Set the width
+            //     child: TextField(
+            //       onChanged: (value) {
+            //         // Handle the input value
+            //         name = value;
+            //       },
+            //       decoration: InputDecoration(
+            //         border: OutlineInputBorder(),
+            //         labelText: 'Enter something',
+            //       ),
+            //     ),
+            //   ),
+            // ),
+            Positioned(
+              left: 625,
+              bottom: 550,
+              child: Text(
+                'SPEED: $range_',
+                style: TextStyle(
+                  fontSize: 40, // Set the font size
+                  color: Color.fromARGB(255, 156, 165, 154), // Set the color
+                ),
+              ),
+            )
           ],
         ));
   }
