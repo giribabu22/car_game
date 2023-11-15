@@ -1,16 +1,43 @@
-# hello_flutter
+# Dart Project
 
-A new Flutter project.
+This is a Dart project that includes a simple application with a stateful widget, `MyHomePage`. The application uses a `ColorScheme` with a seed color of `Colors.deepPurple` and Material Design 3.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- A home page with a title that can be set upon creation.
+- A car movement feature, where the car's position can be updated and displayed on the screen.
 
-A few resources to get you started if this is your first Flutter project:
+## Installation
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+1. Clone the repository.
+2. Open the project in your preferred IDE (e.g., Visual Studio Code).
+3. Ensure you have the Dart SDK installed.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Car Race Feature
+
+This application includes a car race feature. The car's position can be updated and displayed on the screen, simulating a car race. The `_moveCar` function is used to update the car's position. This feature provides an interactive and engaging user experience.
+
+## Button Features
+
+This application includes several buttons that provide various functionalities. These buttons are designed with user-friendly interfaces and are integral to the car race feature. They allow users to control the car's movement, start or pause the race, and reset the game.
+
+## Usage
+
+Run the application by executing the `main.dart` file. The home page will be displayed with the title 'Play Page'. The car's position can be updated by calling the `_moveCar` function with a new position.
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
+## Contact
+
+Please open an issue for any questions or concerns.
+
+## Acknowledgements
+
+- Dart
+- Material Design
